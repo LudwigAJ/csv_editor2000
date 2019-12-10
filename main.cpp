@@ -42,19 +42,21 @@ int main(int argc, const char * argv[]) {
         
         if (current_command == "open"){
             
-            cout << "Please enter the name of your csv file and press enter: " << endl;
+            cout << "\nPlease enter the name of your csv file and press enter: " << endl;
             cin >> csv_name;
             cout << endl;
-            
+            try {
             Wrapper wrapper(open_csv(csv_name));
-            
             display_csv(wrapper);
+            }
+            catch (const ifstream::failure& fail) {
+                cout << "\nSorry, but file could not be opened. Maybe it doesn't exist?\n" << endl;
+            }
             
         } else if (current_command == "exit"){
-            cout << "\nShutting down..." <<  endl;
+            cout << "\nShutting down..." << endl;
         } else {
-            cout << "\nI don't feel so good..." << endl;
-            exit(EXIT_FAILURE);
+            cout << "\nNot a valid command. Please try again\n" << endl;
         }
         
         
@@ -66,21 +68,22 @@ int main(int argc, const char * argv[]) {
 //Handles how we open .csv files
 Wrapper open_csv(string name_input){
     
-    vector<Column> column_vector;
+    vector<Column> column_vector = {};
     
     fstream INFILE;
     
+    INFILE.exceptions( ifstream::failbit );
     
-    INFILE.open(name_input, ios::in);
     
-    if (INFILE.is_open()){
-        
+        INFILE.open(name_input, ios::in);
+    
         string line;
         string word;
         
         getline(INFILE, line);
         stringstream in_line(line);
         
+
         while (getline(in_line, word, ',')){
             
             Column column(word);
@@ -113,13 +116,8 @@ Wrapper open_csv(string name_input){
         Wrapper wrapper(column_vector);
         return wrapper;
         
-    } else {
-        
-        cout << "Invalid file name. Terminating program" << endl;
-        
-        exit(EXIT_FAILURE);
     }
-}
+
 
 
 void display_csv(Wrapper input){
