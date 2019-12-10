@@ -1,3 +1,5 @@
+A personal project.
+
 An .csv editor that works in terminal. More features like sum, difference, average e.t.c. will be coming in the future.
 
 To compile navigate to folder and enter 'make all' and then an executable called 'prog' will appear. Then follow instructions
