@@ -1,15 +1,19 @@
-all: Column.o main.o Wrapper.o
-	g++ Column.o main.o Wrapper.o -o prog
+TARGET=bin/main
 
-Column.o: Column.cpp Column.hpp
-	g++ -c Column.cpp
+OBJECTS=bin/Column.o bin/Wrapper.o $(TARGET).o
 
-Wrapper.o: Wrapper.cpp Wrapper.hpp
-	g++ -c Wrapper.cpp
+bin/%.o : src/%.cpp
+	g++ -Wall -std=c++11 -I ./inc  -c $< -o $@
+
+all: $(TARGET)
+	
+
+$(TARGET): $(OBJECTS)
+	g++ $(OBJECTS) -std=c++11 -o $(TARGET)
 
 run: 
-	./prog
+	./$(TARGET)
 
 clean:
-	rm *.o prog
+	rm bin/*.o $(TARGET)
 
