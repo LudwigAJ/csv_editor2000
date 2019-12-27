@@ -21,3 +21,7 @@ in terminal.
 |          |         8|         6|        54|
 |        67|        43|        24|        65|
 |-------------------------------------------|
+
+The program uses custom made types (by using classes) in order to describe each column, and then a 'wrapper' to then describe
+the columns in one spreadsheet in order.
+Also implemented exception handling when it comes to opening files using fstream.
